@@ -1,0 +1,14 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="SpotifyWebAPi" verbose="1">
+
+    <listeners>
+        <listener class-name="com.spotify.api.listeners.TestNGListener"/>
+    </listeners>
+
+    <test name="Spotify API Tests">
+        <classes>
+            <class name="com.spotify.api.testcases.AlbumTestCases"/>
+        </classes>
+    </test>
+
+</suite>
