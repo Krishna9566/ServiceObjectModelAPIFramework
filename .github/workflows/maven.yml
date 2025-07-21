@@ -30,15 +30,12 @@ jobs:
     - name: Build with Maven
       run: mvn clean test
 
-    - name: Upload test results
+    - name: Upload a Build Artifact
       if: always()
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4.6.2
       with:
-        name: test-results
-        path: |
-          test-output/reports/
-          target/surefire-reports/
-          logs/
+        name: logs
+        path: logs/
     
     - name: Publish Test Report
       if: always()
