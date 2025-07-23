@@ -2,16 +2,17 @@ package com.spotify.api.testcases;
 
 import com.spotify.api.models.requests.searchitems.SearchItemsRequestModel;
 import com.spotify.api.models.responses.albumservice.AlbumResponse;
+import com.spotify.api.models.responses.searchservices.SearchResponse;
 import com.spotify.api.services.AlbumServices;
 import com.spotify.api.services.SearchItemsService;
 import com.spotify.api.util.JSONParser;
+import com.spotify.api.wrappers.BaseTest;
 import io.restassured.response.Response;
 import org.testng.annotations.Test;
 
-import java.util.Arrays;
 import java.util.List;
 
-public class AlbumTestCases {
+public class AlbumTestCases extends BaseTest {
 public void getAlbumDetails()
 {
     String albumId="7ywJmodDrksHrxbnqHSDuT";
@@ -22,7 +23,7 @@ public void getAlbumDetails()
     System.out.println(response.asPrettyString());
 
 }
-    @Test
+@Test
 public void searchAlbum()
 {
     SearchItemsRequestModel searchItemsRequestModel= new SearchItemsRequestModel
@@ -33,18 +34,17 @@ public void searchAlbum()
             .setType(List.of("album"))
             .build();
 
-    SearchItemsService searchItemsService=new SearchItemsService();
     Response response= searchItemsService.getAlbumID(searchItemsRequestModel);
 
     System.out.println(response.asPrettyString());
+    SearchResponse searchResponse=JSONParser.parseObject(response, SearchResponse.class);
+    System.out.println(searchResponse.getAlbums().getItems().getFirst().getId());
+    getTracksList(searchResponse.getAlbums().getItems().getFirst().getId());
 }
 
-    public void krishna()
+    public static void getTracksList(String albumID)
     {
-        String albumId="7ywJmodDrksHrxbnqHSDuT";
-
-        AlbumServices albumServices=new AlbumServices();
-        Response response= albumServices.getAlbum(albumId);
+        Response response= albumServices.getAlbum(albumID);
 
         System.out.println(response.asPrettyString());
 
